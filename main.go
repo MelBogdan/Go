@@ -2,51 +2,48 @@ package main
 
 import "fmt"
 import "math"
+import "os"
 	
-
+// + - * / radical square
 func main(){
-	var firstSide,secondSide,thirdSide float64;
-	fmt.Println("Введите значение первой стороны: ")
-	fmt.Scan(&firstSide)
-	fmt.Println("Введите значение второй стороны: ")
-	fmt.Scan(&secondSide)
-	fmt.Println("Введите значение третьей стороны: ")
-	fmt.Scan(&thirdSide)
-	triangle(firstSide,secondSide,thirdSide)
+	var a, b, res float64
+	var oper string
 
+	fmt.Println("Введите первое число: ")
+	fmt.Scanln(&a)
 
-	var space float64
-	fmt.Println("Введите площадь окружности: ")
-	fmt.Scan("&space")
-	circle(space)
+	fmt.Println("Введите оператор или функцию: ")
+	fmt.Scanln(&oper)
 
-	var number int
-	fmt.Println("Введите трехзначное число")
-	fmt.Scan(&number)
-	num(number)
-
-}
-
-const(
-	pi = math.Pi
-)
-
-func triangle(a,b,c float64) {
-	var p float64 = (a + b + c) / 2
-	var total = math.Sqrt(p * (p - a) * (p - b) * (p - c))
-	fmt.Println("Площадь треугольника равна: ", total)
-}
-
-func circle(a float64){
-	var dia = 2 * math.Sqrt(a / pi)
-	var lenght = 2 * pi * (dia / 2) 
-	fmt.Println("Диаметр окружности равен: " ,dia , " Длина окружности равна: " , lenght)
-}
-
-func num(a int){
-	var array = [3]string{"Единицы", "Десятки", "Сотни"}
-	for i := 0; i < 3; i++{
-		fmt.Println(array[i],": ",a%10);
-		a /= 10;
+	if !(oper == "radical") && !(oper == "square"){
+		fmt.Println("Введите второе число: ")
+		fmt.Scanln(&b)
 	}
+
+	switch oper {
+		case "+":
+			res = a + b
+		case "-":
+			res = a - b
+		case "*":
+			res = a * b
+		case "/":
+			if b == 0{
+				fmt.Println("Деление на ноль невозможно")
+				os.Exit(1)
+			}else{
+				res = a/b
+			}
+		case "radical":
+			res = math.Sqrt(a)
+		case "square":
+			fmt.Println("Введите степень числа: ")
+			fmt.Scanln(&b)
+			res = math.Pow(a, b)
+		default:
+			fmt.Println("Операция не найдена")
+			os.Exit(1)
+	} 
+
+	fmt.Printf("Результат выполнения операции: %f\n",res)
 }
