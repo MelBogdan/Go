@@ -1,49 +1,50 @@
 package main
 
-import "fmt"
-import "math"
-import "os"
-	
-// + - * / radical square
-func main(){
-	var a, b, res float64
-	var oper string
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+)
 
-	fmt.Println("Введите первое число: ")
-	fmt.Scanln(&a)
+func main() {
 
-	fmt.Println("Введите оператор или функцию: ")
-	fmt.Scanln(&oper)
+	slice := []int{}
 
-	if !(oper == "radical") && !(oper == "square"){
-		fmt.Println("Введите второе число: ")
-		fmt.Scanln(&b)
+	createSlice(slice)
+
+	slice = sort(slice)
+
+	fmt.Println("Your array", slice)
+}
+
+func createSlice(slice []int) {
+	scanner := bufio.NewScanner(os.Stdin)
+
+	for scanner.Scan() {
+
+		line := scanner.Text()
+
+		num, err := strconv.ParseInt(line, 10, 64)
+
+		if err != nil {
+			break
+		}
+
+		slice = append(slice, int(num))
 	}
+}
 
-	switch oper {
-		case "+":
-			res = a + b
-		case "-":
-			res = a - b
-		case "*":
-			res = a * b
-		case "/":
-			if b == 0{
-				fmt.Println("Деление на ноль невозможно")
-				os.Exit(1)
-			}else{
-				res = a/b
+func sort(slice []int) []int {
+	var n = len(slice)
+	for i := 1; i < n; i++ {
+		j := i
+		for j > 0 {
+			if slice[j-1] > slice[j] {
+				slice[j-1], slice[j] = slice[j], slice[j-1]
 			}
-		case "radical":
-			res = math.Sqrt(a)
-		case "square":
-			fmt.Println("Введите степень числа: ")
-			fmt.Scanln(&b)
-			res = math.Pow(a, b)
-		default:
-			fmt.Println("Операция не найдена")
-			os.Exit(1)
-	} 
-
-	fmt.Printf("Результат выполнения операции: %f\n",res)
+			j = j - 1
+		}
+	}
+	return slice
 }
