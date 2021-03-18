@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"github.com/MelBogdan/Go/config"
 )
 
-func main(){
-	fmt.Println("Hello world!!!");
+func main() {
+	config.Config()
 }
