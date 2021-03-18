@@ -1,9 +1,15 @@
 package main
 
 import (
-	"fmt"
+	"flag"
+
+	"github.com/MelBogdan/Go/config"
 )
 
-func main(){
-	fmt.Println("Hello world!!!");
+func main() {
+	flag.Parse()
+
+	config.UrlValidation(*config.DB_url)
+	config.UrlValidation(*config.Jaeger_url)
+	config.UrlValidation(*config.Sentry_url)
 }
